@@ -57,9 +57,14 @@ def extract_features(images_list):
             if not gfile.Exists(image_file):
                 tensorflow.logging.fatal("File '%s' does not exist.", image_file)
 
-            image_data = gfile.FastGFile(image_file, 'rb').read()
-            feature = session.run(flattened_tensor, {'DecodeJpeg/contents:0': image_data})
-            features[i, :] = numpy.squeeze(feature)
+            try:
+                image_data = gfile.FastGFile(image_file, 'rb').read()
+                feature = session.run(flattened_tensor, {'DecodeJpeg/contents:0': image_data})
+                features[i, :] = numpy.squeeze(feature)
+
+            except Exception as e:
+                print("Error while extracting features from '%s'", image_file)
+
 
     return features
 

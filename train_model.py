@@ -33,7 +33,7 @@ for cuisine in fetch_images.cuisines:
         filepath = os.path.abspath(os.path.join(path, file))
         _, extension = os.path.splitext(filepath)
 
-        if extension != 'jpeg':
+        if extension != '.jpeg':
             continue
 
         images_list.append(filepath)
@@ -48,7 +48,7 @@ features = extract_features.extract_features(images_list)
 
 x_train, x_test, y_train, y_test = cross_validation.train_test_split(features, labels, test_size = 0.2)
 
-classifier = SVC(loss='squared_hinge', kernel='rbf')
+classifier = SVC(kernel='rbf')
 
 classifier.fit(x_train, y_train)
 

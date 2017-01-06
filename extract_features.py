@@ -63,7 +63,7 @@ def extract_features(images_list):
                 features[i, :] = numpy.squeeze(feature)
 
             except Exception as e:
-                print("Error while extracting features from '%s'", image_file)
+                print("Error while extracting features from '%s'" % image_file)
 
 
     return features

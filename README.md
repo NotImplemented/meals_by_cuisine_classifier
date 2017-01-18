@@ -1,6 +1,4 @@
-# restaurants_by_cuisine_classifier
-
-Classify meals by cuisine.
+# Classify meals by cuisine.
 
 - 14 cuisines
 - 512 images per cuisine extracted using bing image api

@@ -21,7 +21,6 @@ cuisines = [
     'turkish',
     'caribbean']
 
-
 def prepare_data_set():
 
     headers = {
@@ -37,7 +36,7 @@ def prepare_data_set():
 
     for cuisine in cuisines:
 
-        path = cuisine + '_restaurants'
+        path = cuisine + '_meals'
         try:
             os.makedirs(path)
         except OSError:
@@ -46,7 +45,7 @@ def prepare_data_set():
 
         samples_left = sample_size
         offset = 0
-        query = cuisine + '+restaurant+exterior'
+        query = cuisine + '+meals'
         index = 0
 
         print('Preparing data for cuisine: ' + cuisine)
@@ -58,11 +57,11 @@ def prepare_data_set():
 
             try:
                 connection = http.client.HTTPSConnection('api.cognitive.microsoft.com')
-                request = "/bing/v5.0/images/search?q={}&imageType=Photo&count={}&offset={}".format(query, count, offset)
+                request = '/bing/v5.0/images/search?q={}&imageType=Photo&count={}&offset={}'.format(query, count, offset)
                 print("Sending request: '{}'".format(request))
-                connection.request("POST", request, "{body}", headers)
+                connection.request('POST', request, '{body}', headers)
                 response = connection.getresponse()
-                data = response.read()
+                data = response.read().decode('utf-8')
 
                 images = json.loads(data)
                 images = images['value']

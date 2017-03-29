@@ -25,7 +25,7 @@ def maybe_download_and_extract():
             sys.stdout.write("\rDownloading '%s': %d%%" % (model_url, 100 * count * block_size / total_size))
             sys.stdout.flush()
 
-        filepath, _ = urllib.request.urlretrieve(model_url, filepath, progress)
+        filepath, _ = urllib.urlretrieve(model_url, filepath, progress)
 
         file_info = os.stat(filepath)
         print('Successfully downloaded ', filename, ' (', file_info.st_size, 'bytes).')

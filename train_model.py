@@ -47,7 +47,7 @@ def plot_confusion_matrix(y_true, y_predicted):
     plot.rcParams["figure.figsize"] = figure_size
     plot.show()
 
-fetch_images.prepare_data_set()
+#fetch_images.prepare_data_set()
 
 extract_features.maybe_download_and_extract()
 extract_features.create_graph()
@@ -86,30 +86,43 @@ print("Accuracy: {0:0.1f}%".format(accuracy_score(y_test, y_predicted) * 100))
 plot_confusion_matrix(y_test, y_predicted)
 
 # classify several meals and display image table
-sample_meals = ['russian_meals/russian0020.jpeg',
-     'indian_meals/indian0013.jpeg',
+sample_meals = \
+    ['indian_meals/indian0000.jpeg',
+     'russian_meals/russian0002.jpeg',
      'japanese_meals/japanese0026.jpeg',
-     'thai_meals/thai0160.jpeg']
+     'turkish_meals/turkish0004.jpeg',
+
+     'thai_meals/thai0347.jpeg',
+     'spanish_meals/spanish0007.jpeg',
+     'lebanese_meals/lebanese0018.jpeg',
+     'japanese_meals/japanese0034.jpeg',
+
+     'italian_meals/italian0039.jpeg',
+     'greek_meals/greek0009.jpeg',
+     'french_meals/french0021.jpeg',
+     'italian_meals/italian0040.jpeg',
+
+     'english_meals/english0005.jpeg',
+     'chinese_meals/chinese0007.jpeg',
+     'caribbean_meals/caribbean0020.jpeg',
+     'russian_meals/russian0000.jpeg']
 
 sample_features = extract_features.extract_features(sample_meals)
 
 sample_predicted = classifier.predict(sample_features)
 
-_, subplots = plot.subplots(2, 2)
-subplots[0, 0].imshow(image.imread(sample_meals[0]))
-subplots[0, 0].set_title(fetch_images.cuisines[sample_predicted[0]])
-subplots[0, 0].axis('off')
+plot_columns = 4
+plot_rows = 4
 
-subplots[0, 1].imshow(image.imread(sample_meals[1]))
-subplots[0, 1].set_title(fetch_images.cuisines[sample_predicted[1]])
-subplots[0, 1].axis('off')
+_, subplots = plot.subplots(plot_rows, plot_columns)
+for c in range(plot_columns):
+    for r in range(plot_rows):
 
-subplots[1, 1].imshow(image.imread(sample_meals[2]))
-subplots[1, 1].set_title(fetch_images.cuisines[sample_predicted[2]])
-subplots[1, 1].axis('off')
-
-subplots[1, 0].imshow(image.imread(sample_meals[3]))
-subplots[1, 0].set_title(fetch_images.cuisines[sample_predicted[3]])
-subplots[1, 0].axis('off')
+        index = r * plot_columns + c
+        subplots[r, c].imshow(image.imread(sample_meals[index]))
+        subplots[r, c].set_title(fetch_images.cuisines[sample_predicted[index]])
+        subplots[r, c].axis('off')
 
 plot.show()
+
+plot.savefig('classify-4x4.png')

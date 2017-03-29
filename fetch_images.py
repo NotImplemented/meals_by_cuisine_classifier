@@ -1,6 +1,6 @@
 import requests
 import urllib
-import http.client
+import httplib
 import time
 import json
 import os
@@ -31,7 +31,7 @@ def prepare_data_set():
 
     sample_size = 512
     batch_size = 128
-    retries = 6
+    retries = 4
     retry_timeout = 4
 
     for cuisine in cuisines:
@@ -56,11 +56,12 @@ def prepare_data_set():
             connection = None
 
             try:
-                connection = http.client.HTTPSConnection('api.cognitive.microsoft.com')
+                connection = httplib.HTTPSConnection('api.cognitive.microsoft.com', timeout = 8)
                 request = '/bing/v5.0/images/search?q={}&imageType=Photo&count={}&offset={}'.format(query, count, offset)
                 print("Sending request: '{}'".format(request))
                 connection.request('POST', request, '{body}', headers)
                 response = connection.getresponse()
+
                 data = response.read().decode('utf-8')
 
                 images = json.loads(data)
@@ -87,16 +88,19 @@ def prepare_data_set():
                         while retry < retries :
 
                             try:
-                                response = requests.get(url)
+                                response = requests.get(url, timeout = 4)
                                 break
 
                             except requests.exceptions.ConnectionError:
-                                print('Retry #{} downloading image from: {}'.format(retry + 1, url))
+                                print('ConnectionError: Retry #{} downloading image from: {}'.format(retry + 1, url))
                                 retry += 1
                                 time.sleep(retry_timeout)
                             except requests.exceptions.TooManyRedirects:
                                 print('Too many redirects for: {}'.format(url))
                                 break
+                            except requests.exceptions.ReadTimeout:
+                                print('Timeout: Retry #{} downloading image from: {}'.format(retry + 1, url))
+                                retry += 1
 
                         if response and response.status_code == 200:
                             with open(location, 'wb') as file:

@@ -103,7 +103,7 @@ sample_meals = \
      'italian_meals/italian0040.jpeg',
 
      'english_meals/english0005.jpeg',
-     'chinese_meals/chinese0007.jpeg',
+     'chinese_meals/chinese0035.jpeg',
      'caribbean_meals/caribbean0020.jpeg',
      'russian_meals/russian0000.jpeg']
 
@@ -124,5 +124,3 @@ for c in range(plot_columns):
         subplots[r, c].axis('off')
 
 plot.show()
-
-plot.savefig('classify-4x4.png')

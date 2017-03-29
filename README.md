@@ -9,6 +9,4 @@
 
 ![Confusion matrix](https://github.com/NotImplemented/restaurants_by_cuisine_classifier/blob/master/confusion_cuisine_by_meal.png)
 
-![Classified meals](https://github.com/NotImplemented/restaurants_by_cuisine_classifier/blob/master/classified_meals.png)
-
-![More classified meals](https://github.com/NotImplemented/restaurants_by_cuisine_classifier/blob/master/classify-4x4.png)
+![Classified meals](https://github.com/NotImplemented/restaurants_by_cuisine_classifier/blob/master/classify-4x4.png)
